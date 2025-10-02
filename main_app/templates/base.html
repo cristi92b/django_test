@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/jquery-3.7.1.js' %}"></script>
+    <!--<link rel="icon" type="image/x-icon" href="static/images/favicon.ico">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Django Application{% endblock %}</title>
+</head>
+<body>
+    <div id="navbar">
+        {% block navbar %}
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">autorizare-iscir</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li {% if request.resolver_match.view_name == 'main_app:home' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                            <a class="nav-link" href="{% url 'main_app:home' %}">Home</a>
+                        </li>
+                        <li {% if request.resolver_match.view_name == 'main_app:about' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                            <a class="nav-link" href="{% url 'main_app:about' %}">About Us</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="{% url 'main_app:services' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Servicii
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'main_app:services' %}">Autorizare ISCIR RSVTI</a></li>
+                                <li><a class="dropdown-item" href="{% url 'main_app:services' %}">Servicii SSM și PSI</a></li>
+                            </ul>
+                        </li>
+                        <li {% if request.resolver_match.view_name == 'main_app:contact' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                            <a class="nav-link" href="{% url 'main_app:contact' %}">Contact</a>
+                        </li>
+
+
+                        
+                    <!---   {% for entry in pages %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{entry.display_name}}</a>
+                            </li>
+                        {% endfor %}-->
+
+                    </ul>
+
+                    <div class="navbar-nav mx-auto">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2 mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+
+                    <div class="navbar-nav ms-auto">
+                        <li {% if request.resolver_match.view_name == 'main_app:register' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                            {% if request.user.is_authenticated %} {% else %} <a class="nav-link" href="{% url 'main_app:register' %}">Register</a> {% endif %}
+                        </li>
+                        <li {% if request.resolver_match.view_name == 'main_app:login' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                            {% if request.user.is_authenticated %} Hello, {{request.user.username}} {% else %} <a class="nav-link" href="{% url 'main_app:login' %}">Login</a> {% endif %}
+                        </li>
+                        {% if request.user.is_authenticated %}
+                        <li >
+                            <a class="nav-link" href="{% url 'main_app:logout' %}">Logout</a>
+                        </li>
+                        {% endif %}
+                    </div>
+
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        
+        {% block content %}
+        {% include "carousel.html" %}
+        The content of the document...... <br/>
+        <button type="button" class="btn btn-primary">Primary</button>
+
+        {% endblock %}
+    </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="{% static 'image/gb.svg' %}" style="width: 20px; padding-left: 5px;"> English
+      <span class="caret"></span>
+    </button>
+    
+    <ul class="dropdown-menu">
+      <li>
+        <a href="#" title="English" style="text-decoration: none;"><img src="{% static 'image/gb.svg' %}" style="width: 20px; padding-left: 5px;"> English</a>
+      </li>
+      <li>
+        <a href="#" title="Romanian" style="text-decoration: none;"><img src="{% static 'image/ro.svg' %}" style="width: 20px; padding-left: 5px;"> Română</a>
+      </li>
+    </ul>
+  </div>
+
+</body>
+</html> 
+
